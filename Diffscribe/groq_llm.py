@@ -1,4 +1,3 @@
-# groq_llm.py
 import os
 import requests
 from dotenv import load_dotenv
@@ -18,12 +17,13 @@ def generate_commit_message(diff_text: str) -> str:
     }
 
     prompt = f"""
-                You are an expert software engineer. Based on the following Git diff, generate a semantic Conventional Commit message.
+                You are a helpful assistant that writes semantic Git commit messages.
 
-                Examples:
-                - feat(api): add new endpoint for X
-                - fix(login): correct password check logic
-                - refactor(utils): improve file parsing code
+                Format:
+                - feat(scope): new feature
+                - fix(scope): bug fix
+                - refactor(scope): code cleanup
+                - chore(scope): config or tooling changes
 
                 Only output the commit message — no extra text.
 

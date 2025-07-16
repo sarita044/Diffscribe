@@ -131,7 +131,7 @@ def scrub_sensitive_data(diff: str) -> str:
 
         match = assignment_pattern.search(line)
         if not match:
-            return line  # Not an assignment
+            return line
 
         var_name, quote1, value, quote2 = match.groups()
         scrubbed_value = value

@@ -19,7 +19,7 @@ def main():
         print("⚠️ No staged changes found. Please run `git add <file>` first.")
         sys.exit(1)
 
-    short_diff = truncate_diff(raw_diff, max_lines=500)
+    short_diff = truncate_diff(raw_diff, max_lines=150)
     short_diff = re.sub(r'\x1b\[[0-9;]*m', '', short_diff)
     scrubbed_diff = scrub_sensitive_data(short_diff)
     # Step 2: Generate commit message from diff

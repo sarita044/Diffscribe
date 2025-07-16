@@ -12,3 +12,5 @@ __pycache__/
 
 # Ignore VSCode config (if using)
 .vscode/
+
+.env

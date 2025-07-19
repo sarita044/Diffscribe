@@ -186,4 +186,4 @@ def clear_commit_message_cache():
         
         
 def test():
-    print("testing cache file generation")
+    print("test cache file gen:")

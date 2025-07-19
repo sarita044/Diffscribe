@@ -1,14 +1,57 @@
-# Ignore virtual environments
-venv/
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
 
-# Ignore PyInstaller builds
-dist/
+# C extensions
+*.so
+
+# Distribution / packaging
 build/
+dist/
+*.egg-info/
+*.eggs/
+.eggs/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.pyenv/
+
+# dotenv
+.env
+
+# macOS
+.DS_Store
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Test results
+.coverage
+.tox/
+.nox/
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyInstaller
+*.manifest
 *.spec
 
-# Ignore Python cache
-__pycache__/
-*.pyc
-
-# Ignore VSCode config (if using)
-.vscode/
+# Local dev
+*.log

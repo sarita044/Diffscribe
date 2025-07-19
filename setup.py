@@ -1,4 +1,8 @@
 from setuptools import setup, find_packages
+from pathlib import Path
+
+here = Path(__file__).parent
+requirements = (here / "requirements.txt").read_text().splitlines()
 
 setup(
     name="diffscribe",
@@ -8,7 +12,7 @@ setup(
     author_email="sarita1412.chaudhary@email.com",
     packages=find_packages(),
     include_package_data=True,
-    install_requires=open("requirements.txt").read().splitlines(),
+    install_requires=requirements,
     entry_points={
         "console_scripts": [
             "diffscribe=diffscribe.diffscribe:main"

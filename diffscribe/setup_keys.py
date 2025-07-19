@@ -1,4 +1,3 @@
-# diffscribe/setup_keys.py
 import os
 
 def setup_keys(first_setup = False):

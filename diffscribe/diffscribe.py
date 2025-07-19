@@ -17,21 +17,15 @@ else:
     setup_keys(first_setup=True)
     load_dotenv()
 
-# Check and prompt if missing or default
 def ensure_api_keys():
     gemini_key = os.getenv("GEMINI_API_KEY", "")
     groq_key = os.getenv("GROQ_API_KEY", "")
 
     if "your_" in gemini_key or not gemini_key or "your_" in groq_key or not groq_key:
         setup_keys()
-        load_dotenv()  # Reload after writing
+        load_dotenv()
 
 ensure_api_keys()
-
-# Optional: Validate at runtime
-if not os.getenv("GEMINI_API_KEY") and not os.getenv("GROQ_API_KEY"):
-    raise RuntimeError("❌ Both GEMINI_API_KEY and GROQ_API_KEY are missing from environment.")
-
 
 
 def main():
@@ -41,7 +35,7 @@ def main():
     
     print("🧠 Diffscribe: Generating commit message using secure diff...")
 
-    # Step 1: Get the Git diff
+    # Get the Git diff
     raw_diff = diffscribe_utils.get_staged_diff()
     if not raw_diff:
         print("⚠️ No staged changes found. Please run `git add <file>` first.")
@@ -50,7 +44,7 @@ def main():
     short_diff = diffscribe_utils.truncate_diff(raw_diff, max_words=2000)
     short_diff = re.sub(r'\x1b\[[0-9;]*m', '', short_diff)
     scrubbed_diff = diffscribe_utils.scrub_sensitive_data(short_diff)
-    # Step 2: Generate commit message from diff
+    # Generate commit message from diff
     try:
         if args.commit:
             cached_message = diffscribe_utils.load_commit_message_from_cache()

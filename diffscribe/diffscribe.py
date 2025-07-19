@@ -1,4 +1,4 @@
-from diffscribe.utils import get_staged_diff, truncate_diff, scrub_sensitive_data
+from diffscribe import utils as diffscribe_utils
 import argparse
 import subprocess
 import sys
@@ -42,21 +42,31 @@ def main():
     print("🧠 Diffscribe: Generating commit message using secure diff...")
 
     # Step 1: Get the Git diff
-    raw_diff = get_staged_diff()
+    raw_diff = diffscribe_utils.get_staged_diff()
     if not raw_diff:
         print("⚠️ No staged changes found. Please run `git add <file>` first.")
         sys.exit(1)
 
-    short_diff = truncate_diff(raw_diff, max_words=2000)
+    short_diff = diffscribe_utils.truncate_diff(raw_diff, max_words=2000)
     short_diff = re.sub(r'\x1b\[[0-9;]*m', '', short_diff)
-    scrubbed_diff = scrub_sensitive_data(short_diff)
+    scrubbed_diff = diffscribe_utils.scrub_sensitive_data(short_diff)
     # Step 2: Generate commit message from diff
     try:
-        message = generate_commit_message(scrubbed_diff)
-        print("✅ Suggested Commit Message:\n")
-        print(message)
         if args.commit:
-            subprocess.run(["git", "commit", "-m", message])
+            cached_message = diffscribe_utils.load_commit_message_from_cache()
+            if cached_message:
+                subprocess.run(["git", "commit", "-m", cached_message])
+                diffscribe_utils.clear_commit_message_cache()
+            else:
+                # Fallback to generating a new one
+                commit_message = generate_commit_message(scrubbed_diff)
+                subprocess.run(["git", "commit", "-m", commit_message])
+        else:
+            commit_message = generate_commit_message(scrubbed_diff)
+            diffscribe_utils.save_commit_message_to_cache(commit_message)
+            print("✅ Suggested Commit Message:\n")
+            print(commit_message)
+
     except Exception as e:
         print(f"❌ Error: {e}")
         sys.exit(1)

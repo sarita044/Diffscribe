@@ -4,6 +4,8 @@
 import re
 import unicodedata
 import subprocess
+import json
+import os
 
 
 def get_staged_diff() -> str:
@@ -163,3 +165,21 @@ def scrub_sensitive_data(diff: str) -> str:
 
     # Process line by line
     return "\n".join([scrub_line(line) for line in diff.splitlines()])
+
+
+CACHE_FILE = ".diffscribe_cache"
+
+def save_commit_message_to_cache(message: str):
+    with open(CACHE_FILE, "w") as f:
+        json.dump({"message": message}, f)
+
+def load_commit_message_from_cache() -> str:
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE, "r") as f:
+            data = json.load(f)
+            return data.get("message")
+    return None
+
+def clear_commit_message_cache():
+    if os.path.exists(CACHE_FILE):
+        os.remove(CACHE_FILE)

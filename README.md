@@ -35,7 +35,9 @@ Stage your changes as usual:
 git add .
 ```
 Then run:
+```bash
 diffscribe
+```
 
 You’ll see an AI-generated commit message based on your staged diff.
 

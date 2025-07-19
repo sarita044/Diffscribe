@@ -183,3 +183,7 @@ def load_commit_message_from_cache() -> str:
 def clear_commit_message_cache():
     if os.path.exists(CACHE_FILE):
         os.remove(CACHE_FILE)
+        
+        
+def test():
+    print("testing cache file generation")

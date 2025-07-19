@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 
 def setup_keys(first_setup = False):
     if first_setup:
@@ -19,7 +20,7 @@ def setup_keys(first_setup = False):
     print("    ✅ Click **'Create API Key'**, name it, and copy the token")
     groq_key = input("🔑 Enter your Groq API Key (from https://console.groq.com/keys): ").strip()
 
-    env_path = ".env"
+    env_path = Path(__file__).resolve().parent.parent / ".env"
 
     # Avoid duplicate keys
     existing_keys = {}

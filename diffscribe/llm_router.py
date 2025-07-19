@@ -1,6 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout
-from gemini_llm import generate_commit_message as gemini_generate
-from groq_llm import generate_commit_message as groq_generate
+from diffscribe.gemini_llm import generate_commit_message as gemini_generate
+from diffscribe.groq_llm import generate_commit_message as groq_generate
 
 MAX_GEMINI_TIMEOUT = 15  # seconds
 

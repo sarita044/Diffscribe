@@ -59,26 +59,36 @@ def sanitize_diff(diff: str) -> str:
 
     return "\n".join(cleaned_lines)
 
-def truncate_diff(diff: str, max_lines: int = 100) -> str:
+def truncate_diff(diff: str, max_words: int = 1000) -> str:
     """
-    Truncates and sanitizes a git diff.
+    Truncates and sanitizes a git diff by word count, preserving line structure.
 
     Args:
         diff (str): Git diff text.
-        max_lines (int): Max number of lines to send to LLM.
+        max_words (int): Maximum number of words to include.
 
     Returns:
-        str: Cleaned and trimmed diff.
+        str: Cleaned and word-trimmed diff.
     """
     sanitized = sanitize_diff(diff)
     lines = sanitized.strip().splitlines()
 
-    if len(lines) <= max_lines:
-        return sanitized
+    total_words = 0
+    truncated_lines = []
 
-    truncated = lines[:max_lines]
-    truncated.append(f"\n# Diff truncated to first {max_lines} lines.")
-    return "\n".join(truncated)
+    for line in lines:
+        word_count = len(line.split())
+        if total_words + word_count > max_words:
+            break
+        truncated_lines.append(line)
+        total_words += word_count
+
+    # If diff was truncated
+    if total_words < len(sanitized.strip().split()):
+        truncated_lines.append(f"\n# Diff truncated to first {max_words} words.")
+
+    return "\n".join(truncated_lines)
+
 
 def scrub_sensitive_data(diff: str) -> str:
     """

@@ -49,7 +49,7 @@ To auto-generate and commit in one step:
 diffscribe --commit
 ```
 
-This will generate a commit message and run: git commit -m "<generated-message>"
+Commits the previously generated message if available; otherwise, generates a new commit message and runs: git commit -m "<generated-message>"
 
 🔑 First-Time Setup (API Keys)
 When you run diffscribe for the first time, you'll be prompted to enter free API keys for Gemini and Groq.
